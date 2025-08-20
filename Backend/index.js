@@ -34,3 +34,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/",express.static("uploads"));
+
+
+app.use("/api/user",authRoutes);
+app.use("/api/shop",shopRoutes);
+app.use("/api/product",productRoutes);
+app.use("/api/event",eventRoutes);
+app.use("/api/coupon",couponRoutes);
