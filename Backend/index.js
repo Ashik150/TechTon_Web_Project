@@ -14,3 +14,7 @@ import orderRoutes from './routes/order.route.js';
 import conversationRoutes from './routes/conversation.route.js';
 import messageRoutes from './routes/message.route.js';
 import cloudinary from 'cloudinary';
+
+dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 5000;
