@@ -45,3 +45,9 @@ app.use("/api/payment",paymentRoutes);
 app.use("/api/order",orderRoutes);
 app.use("/api/conversation",conversationRoutes);
 app.use("/api/message",messageRoutes);
+
+
+app.listen(PORT, () => {
+    connection();
+    console.log('Server is running on port', PORT);
+});
