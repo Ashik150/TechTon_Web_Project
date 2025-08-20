@@ -41,3 +41,7 @@ app.use("/api/shop",shopRoutes);
 app.use("/api/product",productRoutes);
 app.use("/api/event",eventRoutes);
 app.use("/api/coupon",couponRoutes);
+app.use("/api/payment",paymentRoutes);
+app.use("/api/order",orderRoutes);
+app.use("/api/conversation",conversationRoutes);
+app.use("/api/message",messageRoutes);
