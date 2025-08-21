@@ -30,6 +30,18 @@ export const signup = async (req, res) => {
         });
 
         await user.save();
+        //jwt
+        generateTokenAndSetCookie(res, user._id);
+
+        await sendVerificationEmail(user.email, user.verificationToken);
+
+        res.status(201).json({
+            success: true, message: "User created successfully",
+            user: {
+                ...user._doc,
+                password: undefined,
+            },
+        });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
     }
