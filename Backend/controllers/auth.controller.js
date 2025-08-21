@@ -92,6 +92,10 @@ export const login = async (req, res) => {
         if (!user.isVerified) {
             return res.status(400).json({ success: false, message: "You have to verify your account!" });
         }
+         generateTokenAndSetCookie(res, user._id);
+
+        user.lastLogin = new Date();
+        await user.save();
 
         res.status(200).json({
             success: true, message: "Logged in successfully",
