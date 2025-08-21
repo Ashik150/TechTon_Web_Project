@@ -206,6 +206,17 @@ export const getAllOrdersForAdmin = async (req, res, next) => {
   }
 };
 
+export const getDeliveredOrders = async (req, res) => {
+  try {
+    const deliveredOrders = await Order.find({ status: "Delivered" });
+
+    res.status(200).json(deliveredOrders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 export const getProductCategoryDistribution = async (req, res, next) => {
   try {
     const userEmail = req.params.email;
@@ -270,12 +281,30 @@ export const getProductCategoryDistribution = async (req, res, next) => {
   }
 };
 
-export const getDeliveredOrders = async (req, res) => {
+export const getUserPoints = async (req, res, next) => {
   try {
-    const deliveredOrders = await Order.find({ status: "Delivered" });
+    const userId = req.params.userId;
 
-    res.status(200).json(deliveredOrders);
+    // Find all delivered orders for the user
+
+    const orders = await Order.find({
+      "user._id": userId,
+      status: "Delivered",
+    });
+
+    // Calculate total points dynamically
+    const totalPoints = orders.reduce(
+      (acc, order) => acc + Math.floor(order.totalPrice * 0.01),
+      0
+    );
+
+    res.status(200).json({ success: true, points: totalPoints });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return next(new ErrorHandler(error.message, 500));
   }
 };
+
+
+
+
+
