@@ -3,3 +3,8 @@ import {createOrder,getAllOrdersOfUser,getAllOrdersOfSeller,updateOrderStatus,re
 const router = express.Router();
 import { isSeller} from '../middleware/auth.middleware.js';
 
+router.post("/create-order", createOrder);
+router.get("/get-all-orders/:userId", getAllOrdersOfUser);
+router.get("/get-seller-all-orders/:shopId", getAllOrdersOfSeller);
+router.put("/update-order-status/:id", isSeller, updateOrderStatus);
+router.put("/order-refund/:id", requestOrderRefund);
