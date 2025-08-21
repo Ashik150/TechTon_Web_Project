@@ -205,3 +205,77 @@ export const getAllOrdersForAdmin = async (req, res, next) => {
     return next(new ErrorHandler(error.message, 500));
   }
 };
+
+export const getProductCategoryDistribution = async (req, res, next) => {
+  try {
+    const userEmail = req.params.email;
+
+    const deliveredOrders = await Order.find({
+      "user.email": userEmail,
+      status: "Delivered",
+    });
+
+    if (!deliveredOrders || deliveredOrders.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No delivered orders found for this user.",
+      });
+    }
+
+    let categoryCount = {};
+
+    deliveredOrders.forEach((order) => {
+      order.cart.forEach((item) => {
+        const category = item.category; // Use 'category' based on your data
+
+        // Ensure the product has a category before adding to the count
+        if (category) {
+          categoryCount[category] = (categoryCount[category] || 0) + 1;
+        }
+      });
+    });
+
+    // Log category count to debug
+
+    // If no categories are found
+    if (Object.keys(categoryCount).length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No categories found in the delivered orders.",
+      });
+    }
+
+    // Calculate the total number of items for percentage calculation
+    const totalItems = Object.values(categoryCount).reduce(
+      (sum, count) => sum + count,
+      0
+    );
+
+    // Map the categories to percentage values
+    const categoryPercentage = Object.entries(categoryCount).map(
+      ([category, count]) => ({
+        category,
+        percentage: ((count / totalItems) * 100).toFixed(2), // Keep percentage to 2 decimal places
+      })
+    );
+
+    // Respond with the category distribution and percentages
+    return res.status(200).json({
+      success: true,
+      categoryPercentage,
+    });
+  } catch (error) {
+    console.error("Error in getProductCategoryDistribution:", error); // Log error details
+    return next(new ErrorHandler(error.message, 500)); // Handle errors appropriately
+  }
+};
+
+export const getDeliveredOrders = async (req, res) => {
+  try {
+    const deliveredOrders = await Order.find({ status: "Delivered" });
+
+    res.status(200).json(deliveredOrders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
