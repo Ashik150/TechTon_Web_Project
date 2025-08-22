@@ -192,6 +192,14 @@ export const updateUserInfo = async (req, res, next) => {
             return next(new ErrorHandler("User not found. Please Try Again", 400));
         }
 
+        const isPasswordValid = await bcryptjs.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return next(
+                new ErrorHandler("Please provide the correct Password", 400)
+            );
+        }
+
         user.name = name;
         user.phoneNumber = phoneNumber;
         //console.log(process.env.STRIPE_API_KEY);
