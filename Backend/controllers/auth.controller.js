@@ -259,7 +259,17 @@ export const updateUserAddress = async (req, res, next) => {
                 new ErrorHandler(`${req.body.addressType} address already exists`)
             );
         }
+        
+        const existsAddress = user.addresses.find(
+            (address) => address._id === req.body._id
+        );
 
+        if (existsAddress) {
+            Object.assign(existsAddress, req.body);
+        } else {
+            // add the new address to the array
+            user.addresses.push(req.body);
+        }
 
         await user.save();
 
