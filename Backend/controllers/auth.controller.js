@@ -214,3 +214,35 @@ export const updateUserInfo = async (req, res, next) => {
         return next(new ErrorHandler(error.message, 500));
     }
 };
+
+export const updateAvatar = async (req, res, next) => {
+    try {
+        const Email = req.body.email;
+        const existsUser = await User.findOne({ Email });
+        //console.log("User: ",existsUser);
+        if (req.body.avatar !== "") {
+            const imageId = existsUser.avatar.public_id;
+
+            await cloudinary.uploader.destroy(imageId);
+        }
+
+        const myCloud = await cloudinary.uploader.upload(req.body.avatar, {
+            folder: "avatars",
+            width: 150,
+        });
+
+        existsUser.avatar = {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url,
+        };
+
+        await existsUser.save();
+
+        res.status(200).json({
+            success: true,
+            user: existsUser,
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+};
