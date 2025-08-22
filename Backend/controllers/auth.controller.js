@@ -300,3 +300,20 @@ export const deleteUserAddress = async (req, res, next) => {
         return next(new ErrorHandler(error.message, 500));
     }
 }
+
+export const updatePassword = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.userId).select("+password");
+        const isPasswordMatched = await bcryptjs.compare(req.body.oldPassword, user.password);
+
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Password updated successfully!",
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+};
