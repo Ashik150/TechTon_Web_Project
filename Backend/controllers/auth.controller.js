@@ -281,3 +281,22 @@ export const updateUserAddress = async (req, res, next) => {
         return next(new ErrorHandler(error.message, 500));
     }
 };
+
+export const deleteUserAddress = async (req, res, next) => {
+    try {
+        const addressId = req.params.id;
+
+        await User.updateOne(
+            {
+                _id: req.userId,
+            },
+            { $pull: { addresses: { _id: addressId } } }
+        );
+
+        const user = await User.findById(req.userId);
+
+        res.status(200).json({ success: true, user });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+}
