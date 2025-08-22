@@ -246,3 +246,28 @@ export const updateAvatar = async (req, res, next) => {
         return next(new ErrorHandler(error.message, 500));
     }
 };
+
+export const updateUserAddress = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.userId);
+        //console.log("User: ", user);
+        const sameTypeAddress = user.addresses.find(
+            (address) => address.addressType === req.body.addressType
+        );
+        if (sameTypeAddress) {
+            return next(
+                new ErrorHandler(`${req.body.addressType} address already exists`)
+            );
+        }
+
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            user,
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+};
