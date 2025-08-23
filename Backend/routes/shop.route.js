@@ -14,3 +14,4 @@ const router = express.Router();
 
 router.post("/create-shop", createShop);
 router.post("/activation", activateShop);
+router.post("/login-shop", loginShop);
