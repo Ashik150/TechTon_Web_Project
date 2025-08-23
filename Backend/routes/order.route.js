@@ -7,3 +7,4 @@ router.post("/create-order", createOrder);
 router.get("/get-all-orders/:userId", getAllOrdersOfUser);
 router.get("/get-seller-all-orders/:shopId", getAllOrdersOfSeller);
 router.put("/update-order-status/:id", isSeller, updateOrderStatus);
+router.put("/order-refund/:id", requestOrderRefund);
