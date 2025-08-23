@@ -34,3 +34,8 @@ const addUser = (userId, socketId) => {
 const removeUser = (socketId) => {
     users = users.filter((user) => user.socketId !== socketId);
 };
+
+//getting the user by receiverid
+const getUser = (receiverId) => {
+    return users.find((user) => user.userId === receiverId);
+};
