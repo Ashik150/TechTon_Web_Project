@@ -11,3 +11,4 @@ const router = express.Router();
 import { verifyToken } from "../middleware/verifyToken.js";
 
 router.post("/create-product", createProduct);
+router.get("/get-all-products-shop/:id", getProducts);
