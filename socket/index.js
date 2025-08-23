@@ -39,3 +39,11 @@ const removeUser = (socketId) => {
 const getUser = (receiverId) => {
     return users.find((user) => user.userId === receiverId);
 };
+// Define a message object with a seen property
+const createMessage = ({ senderId, receiverId, text, images }) => ({
+    senderId,
+    receiverId,
+    text,
+    images,
+    seen: false,
+});
