@@ -4,3 +4,4 @@ const router = express.Router();
 import { isSeller} from '../middleware/auth.middleware.js';
 
 router.post("/create-order", createOrder);
+router.get("/get-all-orders/:userId", getAllOrdersOfUser);
