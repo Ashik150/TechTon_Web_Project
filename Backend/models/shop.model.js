@@ -69,3 +69,8 @@ shopSchema.methods.getJwtToken = function () {
     expiresIn: process.env.JWT_EXPIRES,
   });
 };
+
+// comapre password
+shopSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
