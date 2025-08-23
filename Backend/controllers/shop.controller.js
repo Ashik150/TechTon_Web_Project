@@ -217,11 +217,8 @@ export const updateShopAvatar = async (req, res, next) => {
       seller: existsSeller,
     });
   } catch (error) {
-    return next(new ErrorHandler(error.message, 50));
+    return next(new ErrorHandler(error.message, 500));
   }
 };
-
-
-
 
 
