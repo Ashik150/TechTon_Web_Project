@@ -20,3 +20,5 @@ router.get("/logout", isSeller, logoutShop);
 router.get("/get-shop-info/:id", getShopInfo);
 router.put("/update-seller-info", isSeller, updateSeller);
 router.put("/update-shop-avatar", isSeller, updateShopAvatar);
+
+export default router;
