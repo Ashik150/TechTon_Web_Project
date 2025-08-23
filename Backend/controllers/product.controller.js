@@ -101,3 +101,12 @@ export const getAllProduct = async (req, res, next) => {
     return next(new ErrorHandler(error.message, 400));
   }
 };
+
+export const createNewReview =async(req,res,next)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
