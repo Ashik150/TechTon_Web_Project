@@ -17,3 +17,4 @@ router.post("/activation", activateShop);
 router.post("/login-shop", loginShop);
 router.get("/getSeller", isSeller, getSeller);
 router.get("/logout", isSeller, logoutShop);
+router.get("/get-shop-info/:id", getShopInfo);
