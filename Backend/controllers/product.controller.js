@@ -60,3 +60,44 @@ export const getProducts = async (req, res, next) => {
     return next(new ErrorHandler(error.message, 400));
   }
 };
+
+export const deleteProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return next(new ErrorHandler("Product not found", 400));
+    }
+
+    for (let i = 0; i < product.images.length; i++) {
+      const result = await cloudinary.uploader.destroy(
+        product.images[i].public_id
+      );
+    }
+
+    await Product.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 400));
+  }
+};
+
+export const getAllProduct = async (req, res, next) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+    if (!products || products.length === 0) {
+      return next(new ErrorHandler("No products found", 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 400));
+  }
+};
