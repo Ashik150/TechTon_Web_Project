@@ -9,4 +9,5 @@ import {
 } from "../controllers/product.controller.js";
 const router = express.Router();
 import { verifyToken } from "../middleware/verifyToken.js";
-    
+
+router.post("/create-product", createProduct);
