@@ -34,7 +34,7 @@ export const getConversationSeller = async (req, res, next) => {
             members: {
                 $in: [req.params.id],
             },
-        })
+        }).sort({ updatedAt: -1, createdAt: -1 });
 
         res.status(201).json({
             success: true,
