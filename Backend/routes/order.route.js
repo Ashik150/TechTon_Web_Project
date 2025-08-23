@@ -6,3 +6,4 @@ import { isSeller} from '../middleware/auth.middleware.js';
 router.post("/create-order", createOrder);
 router.get("/get-all-orders/:userId", getAllOrdersOfUser);
 router.get("/get-seller-all-orders/:shopId", getAllOrdersOfSeller);
+router.put("/update-order-status/:id", isSeller, updateOrderStatus);
