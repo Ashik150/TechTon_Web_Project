@@ -96,5 +96,12 @@ socket.on("messageSeen", ({ senderId, receiverId, messageId }) => {
                 });
             }
         }
-
     });
+    // Update the last message for a conversation
+    socket.on("updateLastMessage", ({ lastMessage, lastMessagesId }) => {
+        io.emit("getLastMessage", {
+            lastMessage,
+            lastMessagesId,
+        });
+    });
+
