@@ -75,3 +75,15 @@ io.on("connection", (socket) => {
     io.to(user?.socketId).emit("getMessage", message);
   });
 });
+// 
+socket.on("messageSeen", ({ senderId, receiverId, messageId }) => {
+        const user = getUser(senderId);
+
+        // update the seen flag for the message
+        if (messages[receiverId]) {
+          messages[receiverId] = messages[receiverId].map((msg) =>
+            msg.id === messageId ? { ...msg, seen: true } : msg
+          );
+        }
+        
+    });
