@@ -12,6 +12,7 @@ const Cart = ({ setOpenCart }) => {
             <RxCross1
               size={25}
               className="cursor-pointer"
+              onClick={() => setOpenCart(false)}
             />
           </div>
           <h5>Cart is empty!</h5>
