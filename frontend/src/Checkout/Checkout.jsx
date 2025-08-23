@@ -1,62 +1,52 @@
-// ... imports
-import axios from "axios";
-import { server } from "../../server";
-import { toast } from "react-toastify";
-
+// ... All imports and previous states
 const Checkout = () => {
-  // ... all previous states
-  const [couponCode, setCouponCode] = useState("");
-  const [couponCodeData, setCouponCodeData] = useState(null);
-  const [discountPrice, setDiscountPrice] = useState(null);
-  
-  const subTotalPrice = cart.reduce(/* ... */);
-  const shipping = subTotalPrice * 0.1;
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const name = couponCode;
-    await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
-        // ... (full coupon logic from original file)
-    });
-  };
-  
-  const discountPercentenge = couponCodeData ? discountPrice : "";
-  const totalPrice = (subTotalPrice + shipping - (discountPercentenge || 0)).toFixed(2);
-
-  return (
-    <div className="w-full flex flex-col items-center py-8">
-      {/* ... main layout */}
-      <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
-        <CartData
-          handleSubmit={handleSubmit} totalPrice={totalPrice} shipping={shipping} subTotalPrice={subTotalPrice}
-          couponCode={couponCode} setCouponCode={setCouponCode} discountPercentenge={discountPercentenge}
-        />
-      </div>
-    </div>
-  );
+    // ... all previous state hooks
+    const [useRewardPoints, setUseRewardPoints] = useState(false);
+    const [userPoints, setUserPoints] = useState(0);
+    const [pointsDiscount, setPointsDiscount] = useState(0);
+    
+    // ... all handlers and price calculations
+    
+    return (
+        <div className="w-full flex flex-col items-center py-8">
+            <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
+                <div className="w-full 800px:w-[65%]">
+                    <ShippingInfo /* ...props */ />
+                </div>
+                <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
+                    <CartData
+                        /* ...other props */
+                        userPoints={userPoints}
+                        pointsDiscount={pointsDiscount}
+                        useRewardPoints={useRewardPoints}
+                    />
+                </div>
+            </div>
+        </div>
+    );
 };
-
 // ... ShippingInfo component
-const CartData = ({ handleSubmit, totalPrice, shipping, subTotalPrice, couponCode, setCouponCode, discountPercentenge }) => {
-  return (
-    <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
-      {/* ... subtotal, shipping */}
-      <div className="flex justify-between">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">Coupon Discount:</h3>
-        <h5 className="text-[18px] font-[600]">- {discountPercentenge ? discountPercentenge.toString() : 0} BDT</h5>
-      </div>
-      <div className="flex justify-between border-t border-b py-3">
-        <h3 className="text-[16px] font-[500] text-[#000000a4]">Total:</h3>
-        <h5 className="text-[18px] font-[600]">{totalPrice} BDT</h5>
-      </div>
-      <br />
-      <form onSubmit={handleSubmit}>
-        <input type="text" className={`${styles.input} h-[40px] pl-2`} placeholder="Coupoun code"
-          value={couponCode} onChange={(e) => setCouponCode(e.target.value)} required />
-        <input className={`w-full h-[40px] border border-[#f63b60] ...`} required value="Apply code" type="submit" />
-      </form>
-    </div>
-  );
+const CartData = ({ /* ...other props */, userPoints, pointsDiscount, useRewardPoints }) => {
+    return (
+        <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
+            {/* ... subtotal, shipping, coupon discount */}
+            <div className="mt-2 mb-4 border-t pt-4">
+                <div className="flex justify-between items-center">
+                    <div>
+                        <h3 className="text-[16px] font-[500] text-[#000000d4]">
+                            Your Reward Points: <span className="font-[600] text-[#f63b60]">{userPoints}</span>
+                        </h3>
+                        <p className="text-[12px] text-[#00000094]">(100 points = 1 BDT discount)</p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" className="sr-only peer" checked={useRewardPoints} />
+                        <div className={`w-11 h-6 bg-gray-200 ...`}></div>
+                        <span className="ml-3 text-sm font-medium text-gray-900">Use Points</span>
+                    </label>
+                </div>
+            </div>
+            {/* ... total price and coupon form */}
+        </div>
+    );
 };
-
 export default Checkout;
