@@ -44,3 +44,9 @@ export const createShop = async (req, res, next) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+const createActivationToken = (seller) => {
+  return jwt.sign(seller, process.env.ACTIVATION_SECRET, {
+    expiresIn: "5m",
+  });
+};
