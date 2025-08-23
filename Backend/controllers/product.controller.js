@@ -154,3 +154,8 @@ export const createNewReview =async(req,res,next)=>{
     }
 }
 
+export const getBestSellingProducts = async (req, res, next) => {
+  
+};
+
+
