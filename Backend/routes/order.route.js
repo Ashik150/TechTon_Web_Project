@@ -9,6 +9,9 @@ router.get("/get-seller-all-orders/:shopId", getAllOrdersOfSeller);
 router.put("/update-order-status/:id", isSeller, updateOrderStatus);
 router.put("/order-refund/:id", requestOrderRefund);
 router.put("/order-refund-success/:id", isSeller, acceptOrderRefund);
-router.get("/delivered", getDeliveredOrders);
+router.get("/get-delivered", getDeliveredOrders); 
 router.get("/get-category-distribution/:email", getProductCategoryDistribution);
-router.get("/user-points/:userId", getUserPoints);
+router.get("/user-point/:userId", getUserPoints);
+
+
+export default router;
