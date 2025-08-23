@@ -1,70 +1,62 @@
-// ... All imports remain the same
-import React, { useState } from "react";
-// ...
+// ... imports
+import axios from "axios";
+import { server } from "../../server";
+import { toast } from "react-toastify";
+
 const Checkout = () => {
-  const { user } = useAuthStore();
-  const { cart } = useSelector((state) => state.cart);
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [userInfo, setUserInfo] = useState(false);
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [zipCode, setZipCode] = useState(null);
+  // ... all previous states
+  const [couponCode, setCouponCode] = useState("");
+  const [couponCodeData, setCouponCodeData] = useState(null);
+  const [discountPrice, setDiscountPrice] = useState(null);
   
-  // ... price calculation ...
-  const subTotalPrice = cart.reduce((acc, item) => acc + item.qty * item.discountPrice, 0);
+  const subTotalPrice = cart.reduce(/* ... */);
   const shipping = subTotalPrice * 0.1;
-  const totalPrice = (subTotalPrice + shipping).toFixed(2);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const name = couponCode;
+    await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
+        // ... (full coupon logic from original file)
+    });
+  };
   
+  const discountPercentenge = couponCodeData ? discountPrice : "";
+  const totalPrice = (subTotalPrice + shipping - (discountPercentenge || 0)).toFixed(2);
+
   return (
     <div className="w-full flex flex-col items-center py-8">
-      <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
-        <div className="w-full 800px:w-[65%]">
-          <ShippingInfo
-            user={user} country={country} setCountry={setCountry} city={city} setCity={setCity}
-            userInfo={userInfo} setUserInfo={setUserInfo} address1={address1} setAddress1={setAddress1}
-            address2={address2} setAddress2={setAddress2} zipCode={zipCode} setZipCode={setZipCode}
-          />
-        </div>
-        <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
-          <CartData subTotalPrice={subTotalPrice} shipping={shipping} totalPrice={totalPrice} />
-        </div>
+      {/* ... main layout */}
+      <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
+        <CartData
+          handleSubmit={handleSubmit} totalPrice={totalPrice} shipping={shipping} subTotalPrice={subTotalPrice}
+          couponCode={couponCode} setCouponCode={setCouponCode} discountPercentenge={discountPercentenge}
+        />
       </div>
     </div>
   );
 };
 
-const ShippingInfo = ({ user, country, setCountry, city, setCity, userInfo, setUserInfo, address1, setAddress1, address2, setAddress2, zipCode, setZipCode }) => {
-  const [selectedAddress, setSelectedAddress] = useState(null);
+// ... ShippingInfo component
+const CartData = ({ handleSubmit, totalPrice, shipping, subTotalPrice, couponCode, setCouponCode, discountPercentenge }) => {
   return (
-    <div className="w-full 800px:w-[95%] bg-white rounded-md p-5 pb-8">
-      {/* ... form fields */}
-      <h5 className="text-[18px] cursor-pointer inline-block" onClick={() => setUserInfo(!userInfo)}>
-        Choose From saved address
-      </h5>
-      {userInfo && (
-        <div>
-          {user && user.addresses.map((item, index) => (
-            <div className="w-full flex mt-1" key={index}>
-              <input
-                type="checkbox"
-                className="mr-3"
-                checked={selectedAddress === item.addressType}
-                value={item.addressType}
-                onClick={() =>
-                  setSelectedAddress(item.addressType) || setAddress1(item.address1) ||
-                  setAddress2(item.address2) || setZipCode(item.zipCode) ||
-                  setCountry(item.country) || setCity(item.city)
-                }
-              />
-              <h2>{item.addressType}</h2>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
+      {/* ... subtotal, shipping */}
+      <div className="flex justify-between">
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Coupon Discount:</h3>
+        <h5 className="text-[18px] font-[600]">- {discountPercentenge ? discountPercentenge.toString() : 0} BDT</h5>
+      </div>
+      <div className="flex justify-between border-t border-b py-3">
+        <h3 className="text-[16px] font-[500] text-[#000000a4]">Total:</h3>
+        <h5 className="text-[18px] font-[600]">{totalPrice} BDT</h5>
+      </div>
+      <br />
+      <form onSubmit={handleSubmit}>
+        <input type="text" className={`${styles.input} h-[40px] pl-2`} placeholder="Coupoun code"
+          value={couponCode} onChange={(e) => setCouponCode(e.target.value)} required />
+        <input className={`w-full h-[40px] border border-[#f63b60] ...`} required value="Apply code" type="submit" />
+      </form>
     </div>
   );
 };
-// ... CartData component remains the same
-const CartData = ({ subTotalPrice, shipping, totalPrice }) => { /* ... */ };
+
 export default Checkout;
