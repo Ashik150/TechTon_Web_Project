@@ -57,4 +57,14 @@ io.on('connection', (socket) => {
         addUser(userId, socket.id);
         io.emit("getUsers", users);
     });
+    const messages = {};
+    
+    //send and get message
+    socket.on("sendMessage", (message) => {
+        const { receiverId } = message;
+        const user = getUser(receiverId);
+        if (user) {
+            io.to(user.socketId).emit("getMessage", createMessage(message));
+        }
+    });
 });
