@@ -12,3 +12,6 @@ router.put("/order-refund-success/:id", isSeller, acceptOrderRefund);
 router.get("/get-delivered", getDeliveredOrders); 
 router.get("/get-category-distribution/:email", getProductCategoryDistribution);
 router.get("/user-point/:userId", getUserPoints);
+
+
+export default router;
