@@ -74,34 +74,40 @@ io.on("connection", (socket) => {
     // send the message to the recevier
     io.to(user?.socketId).emit("getMessage", message);
   });
-});
-// 
-socket.on("messageSeen", ({ senderId, receiverId, messageId }) => {
-        const user = getUser(senderId);
 
-        // update the seen flag for the message
-        if (messages[senderId]) {
-            const message = messages[senderId].find(
-                (message) =>
-                    message.receiverId === receiverId && message.id === messageId
-            );
-            if (message) {
-                message.seen = true;
+  //
+  socket.on("messageSeen", ({ senderId, receiverId, messageId }) => {
+    const user = getUser(senderId);
 
-                // send a message seen event to the sender
-                io.to(user?.socketId).emit("messageSeen", {
-                    senderId,
-                    receiverId,
-                    messageId,
-                });
-            }
-        }
-    });
-    // Update the last message for a conversation
-    socket.on("updateLastMessage", ({ lastMessage, lastMessagesId }) => {
-        io.emit("getLastMessage", {
-            lastMessage,
-            lastMessagesId,
+    // update the seen flag for the message
+    if (messages[senderId]) {
+      const message = messages[senderId].find(
+        (message) =>
+          message.receiverId === receiverId && message.id === messageId
+      );
+      if (message) {
+        message.seen = true;
+
+        // send a message seen event to the sender
+        io.to(user?.socketId).emit("messageSeen", {
+          senderId,
+          receiverId,
+          messageId,
         });
+      }
+    }
+  });
+  // Update the last message for a conversation
+  socket.on("updateLastMessage", ({ lastMessage, lastMessagesId }) => {
+    io.emit("getLastMessage", {
+      lastMessage,
+      lastMessagesId,
     });
-
+  });
+  //when the user is disconnected
+  socket.on("disconnect", () => {
+    console.log("a user is disconnected!");
+    removeUser(socket.id);
+    io.emit("getUsers", users);
+  });
+});
