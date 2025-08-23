@@ -80,10 +80,21 @@ socket.on("messageSeen", ({ senderId, receiverId, messageId }) => {
         const user = getUser(senderId);
 
         // update the seen flag for the message
-        if (messages[receiverId]) {
-          messages[receiverId] = messages[receiverId].map((msg) =>
-            msg.id === messageId ? { ...msg, seen: true } : msg
-          );
+        if (messages[senderId]) {
+            const message = messages[senderId].find(
+                (message) =>
+                    message.receiverId === receiverId && message.id === messageId
+            );
+            if (message) {
+                message.seen = true;
+
+                // send a message seen event to the sender
+                io.to(user?.socketId).emit("messageSeen", {
+                    senderId,
+                    receiverId,
+                    messageId,
+                });
+            }
         }
-        
+
     });
