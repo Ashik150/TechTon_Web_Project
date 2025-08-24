@@ -78,6 +78,11 @@ export const deleteEvent = async (req, res, next) => {
         if (!event) {
             return next(new ErrorHandler('Event not found. Please Try Again', 400));
         }
+        for (let i = 0; i < event.images.length; i++) {
+            const result = await cloudinary.uploader.destroy(
+                event.images[i].public_id
+            );
+        }
 
         await Event.findByIdAndDelete(req.params.id);
         res.status(200).json({
