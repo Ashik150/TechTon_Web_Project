@@ -43,6 +43,10 @@ export const deleteCouponCode = async (req, res, next) => {
     try {
         const couponCode = await CouponCode.findByIdAndDelete(req.params.id);
 
+        if (!couponCode) {
+            return next(new ErrorHandler("Coupon code not found!", 404));
+        }
+
         res.status(201).json({
             success: true,
             message: "Coupon code deleted successfully!",
