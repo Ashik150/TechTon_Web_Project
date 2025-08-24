@@ -23,3 +23,19 @@ export const createCouponCode = async (req, res, next) => {
         return next(new ErrorHandler(error.message, 400));
     }
 };
+
+export const getCouponCodes = async (req, res, next) => {
+    try {
+        const couponCodes = await CouponCode.find({
+            shopId: req.params.id,
+        });
+
+        res.status(201).json({
+            success: true,
+            couponCodes,
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 400));
+    }
+};
+
