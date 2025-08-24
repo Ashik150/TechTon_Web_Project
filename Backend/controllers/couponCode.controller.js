@@ -11,6 +11,10 @@ export const createCouponCode = async (req, res, next) => {
 
         const couponCode = await CouponCode.create(req.body);
 
+         if (isCouponCodeExists.length !== 0) {
+            return next(new ErrorHandler("Coupon code already exists!", 400));
+        }
+
         res.status(201).json({
             success: true,
             couponCode,
