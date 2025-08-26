@@ -143,6 +143,24 @@ const ProductDetails = ({ data }) => {
             {data.originalPrice ? "BDT " + data.originalPrice : null}
           </h3>
         </div>
+        <div>
+          {click ? (
+            <AiFillHeart
+              size={30}
+              className="cursor-pointer"
+              onClick={() => removeFromWishlistHandler(data)}
+              color={click ? "red" : "#333"}
+              title="Remove from wishlist"
+            />
+          ) : (
+            <AiOutlineHeart
+              size={30}
+              className="cursor-pointer"
+              onClick={() => addToWishlistHandler(data)}
+              title="Add to wishlist"
+            />
+          )}
+        </div>
       </div>
     </div>
   );
