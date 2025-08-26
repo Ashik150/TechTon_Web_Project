@@ -7,3 +7,4 @@ import {
 
 
 router.post("/process", processpayment);
+router.get("/stripeapikey", stripekey);
