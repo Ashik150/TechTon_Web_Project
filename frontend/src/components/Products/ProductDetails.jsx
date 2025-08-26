@@ -111,7 +111,31 @@ const ProductDetails = ({ data }) => {
 
   return (
     <div>
-      <h1>Product Details</h1>
+      <div className="w-full 800px:w-[50%]">
+        <img
+          src={`${data && data.images[select]?.url}`}
+          alt=""
+          className="w-[80%]"
+        />
+        <div className="w-full flex">
+          {data &&
+            data.images.map((i, index) => (
+              <div
+                className={`${select === 0 ? "border" : "null"} cursor-pointer`}
+              >
+                <img
+                  src={`${i?.url}`}
+                  alt=""
+                  className="h-[200px] overflow-hidden mr-3 mt-3"
+                  onClick={() => setSelect(index)}
+                />
+              </div>
+            ))}
+          <div
+            className={`${select === 1 ? "border" : "null"} cursor-pointer`}
+          ></div>
+        </div>
+      </div>
     </div>
   );
 };
