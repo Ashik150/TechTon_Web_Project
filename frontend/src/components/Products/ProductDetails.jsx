@@ -1,4 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "../../styles/styles";
+import {
+  AiOutlineMessage,
+  AiOutlineHeart,
+  AiFillHeart,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { backend_url, server } from "../../server";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getAllProductsShop } from "../../redux/actions/product";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "../../redux/actions/wishlist";
+import { addTocart } from "../../redux/actions/cart";
+import { toast } from "react-toastify";
+import { useAuthStore } from "../../store/authStore";
+import Ratings from "./Ratings";
+import axios from "axios";
+
 const ProductDetails = ({ data }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
@@ -11,6 +34,7 @@ const ProductDetails = ({ data }) => {
   const { seller } = useSelector((state) => state.seller);
   const { user } = useAuthStore();
   const dispatch = useDispatch();
+  //console.log(data);
 
   useEffect(() => {
     dispatch(getAllProductsShop(data && data?.shop._id));
@@ -38,6 +62,7 @@ const ProductDetails = ({ data }) => {
   const incrementCount = () => {
     if (count < data.stock) {
       setCount(count + 1);
+
     } else {
       toast.error("Product stock limited");
     }
@@ -51,12 +76,11 @@ const ProductDetails = ({ data }) => {
       console.log("userID: ", userId);
       console.log("sellerID: ", sellerId);
       console.log("groupTitle: ", groupTitle);
-      await axios
-        .post(`${server}/conversation/create-new-conversation`, {
-          groupTitle,
-          userId,
-          sellerId,
-        })
+      await axios.post(`${server}/conversation/create-new-conversation`, {
+        groupTitle,
+        userId,
+        sellerId,
+      })
         .then((res) => {
           console.log("success");
           navigate(`/inbox?${res.data.conversation._id}`);
@@ -93,7 +117,8 @@ const ProductDetails = ({ data }) => {
       }
     }
   };
-  // Calculate total reviews and ratings
+
+
   const totalReviewsLength =
     products &&
     products.reduce((acc, product) => acc + product.reviews.length, 0);
@@ -105,7 +130,9 @@ const ProductDetails = ({ data }) => {
         acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
       0
     );
+
   const avg = totalRatings / totalReviewsLength || 0;
+
   const averageRating = avg.toFixed(2);
   console.log(averageRating);
 
@@ -234,7 +261,6 @@ const ProductDetails = ({ data }) => {
     </div>
   );
 };
-
 const ProductDetailsInfo = ({ data, products, totalReviewsLength, averageRating, Seller }) => {
   const [active, setActive] = useState(1);
   return (
