@@ -161,6 +161,14 @@ const ProductDetails = ({ data }) => {
             />
           )}
         </div>
+        <div
+          className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center bg-[#355E3B]`}
+          onClick={() => addToCartHandler(data._id)}
+        >
+          <span className="text-white flex items-center">
+            Add to cart <AiOutlineShoppingCart className="ml-1" />
+          </span>
+        </div>
       </div>
     </div>
   );
