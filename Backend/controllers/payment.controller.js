@@ -15,3 +15,7 @@ export const processpayment = async (req, res, next) => {
     client_secret: myPayment.client_secret,
   });
 };
+
+export const stripeKey=async(req,res,next)=>{
+
+}
