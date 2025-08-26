@@ -51,11 +51,12 @@ const ProductDetails = ({ data }) => {
       console.log("userID: ", userId);
       console.log("sellerID: ", sellerId);
       console.log("groupTitle: ", groupTitle);
-      await axios.post(`${server}/conversation/create-new-conversation`, {
-        groupTitle,
-        userId,
-        sellerId,
-      })
+      await axios
+        .post(`${server}/conversation/create-new-conversation`, {
+          groupTitle,
+          userId,
+          sellerId,
+        })
         .then((res) => {
           console.log("success");
           navigate(`/inbox?${res.data.conversation._id}`);
@@ -92,6 +93,18 @@ const ProductDetails = ({ data }) => {
       }
     }
   };
+  // Calculate total reviews and ratings
+  const totalReviewsLength =
+    products &&
+    products.reduce((acc, product) => acc + product.reviews.length, 0);
+
+  const totalRatings =
+    products &&
+    products.reduce(
+      (acc, product) =>
+        acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
+      0
+    );
 
   return (
     <div>
