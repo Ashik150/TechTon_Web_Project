@@ -135,6 +135,14 @@ const ProductDetails = ({ data }) => {
             className={`${select === 1 ? "border" : "null"} cursor-pointer`}
           ></div>
         </div>
+        <div className="flex pt-3">
+          <h4 className={`${styles.productDiscountPrice}}`}>
+            BDT {data.discountPrice}
+          </h4>
+          <h3 className={`${styles.price}`}>
+            {data.originalPrice ? "BDT " + data.originalPrice : null}
+          </h3>
+        </div>
       </div>
     </div>
   );
