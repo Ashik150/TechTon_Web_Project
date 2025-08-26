@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-const ProductDetails = ({data}) => {
+const ProductDetails = ({ data }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
   const [count, setCount] = useState(1);
@@ -12,7 +12,7 @@ const ProductDetails = ({data}) => {
   const { user } = useAuthStore();
   const dispatch = useDispatch();
 
-   useEffect(() => {
+  useEffect(() => {
     dispatch(getAllProductsShop(data && data?.shop._id));
     if (wishlist && wishlist.find((i) => i._id === data?._id)) {
       setClick(true);
@@ -32,7 +32,16 @@ const ProductDetails = ({data}) => {
       setCount(count - 1);
     }
   };
+  // Increment the product count
+  // If the product count is less than the product stock, increment the count
 
+  const incrementCount = () => {
+    if (count < data.stock) {
+      setCount(count + 1);
+    } else {
+      toast.error("Product stock limited");
+    }
+  };
 
   return (
     <div>
