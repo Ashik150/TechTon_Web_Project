@@ -4,3 +4,6 @@ import {
   processpayment,
   stripekey,
 } from "../controllers/payment.controller.js";
+
+
+router.post("/process", processpayment);
