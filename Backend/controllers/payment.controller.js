@@ -16,6 +16,6 @@ export const processpayment = async (req, res, next) => {
   });
 };
 
-export const stripeKey=async(req,res,next)=>{
-
-}
+export const stripekey = async (req, res, next) => {
+  res.status(200).json({ stripeApikey: process.env.STRIPE_API_KEY });
+};
