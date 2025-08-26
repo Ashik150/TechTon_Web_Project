@@ -43,6 +43,32 @@ const ProductDetails = ({ data }) => {
     }
   };
 
+  const handleMessageSubmit = async () => {
+    if (user) {
+      const groupTitle = data._id + user._id;
+      const userId = user._id;
+      const sellerId = data.shop._id;
+      console.log("userID: ", userId);
+      console.log("sellerID: ", sellerId);
+      console.log("groupTitle: ", groupTitle);
+      await axios.post(`${server}/conversation/create-new-conversation`, {
+        groupTitle,
+        userId,
+        sellerId,
+      })
+        .then((res) => {
+          console.log("success");
+          navigate(`/inbox?${res.data.conversation._id}`);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
+    } else {
+      toast.error("Please login to create a conversation");
+    }
+  };
+
+
   return (
     <div>
       <h1>Product Details</h1>
