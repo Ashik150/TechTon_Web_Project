@@ -105,7 +105,9 @@ const ProductDetails = ({ data }) => {
         acc + product.reviews.reduce((sum, review) => sum + review.rating, 0),
       0
     );
-    const avg = totalRatings / totalReviewsLength || 0;
+  const avg = totalRatings / totalReviewsLength || 0;
+  const averageRating = avg.toFixed(2);
+  console.log(averageRating);
 
   return (
     <div>
