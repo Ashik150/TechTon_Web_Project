@@ -44,6 +44,33 @@ const ProfileContent = ({ active }) => {
     dispatch(updateUserInformation(name, email, phoneNumber, password));
   };
 
+  const handleImage = async (e) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setAvatar(reader.result);
+        axios
+          .put(
+            `${server}/user/update-avatar`,
+            { avatar: reader.result },
+            {
+              withCredentials: true,
+            }
+          )
+          .then((response) => {
+            dispatch(loadUser());
+            toast.success("avatar updated successfully!");
+          })
+          .catch((error) => {
+            toast.error(error);
+          });
+      }
+    };
+
+    reader.readAsDataURL(e.target.files[0]);
+  };
+
   return (
     <div>
       <h1>User Profile</h1>
