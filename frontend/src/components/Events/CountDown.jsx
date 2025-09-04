@@ -42,3 +42,15 @@ const CountDown = ({ data={} }) => {
       return null;
     }
 
+    return (
+      <span className="text-[25px] text-[#475ad2]">
+        {timeLeft[interval]} {interval}{" "}
+      </span>
+    );
+  });
+
+  return (
+    <div>
+      {timerComponents.length ? (
+        timerComponents
+      ) : (
