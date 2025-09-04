@@ -121,3 +121,23 @@ const Checkout = () => {
             0
           );
           const discountPrice = (eligiblePrice * couponCodeValue) / 100;
+          setDiscountPrice(discountPrice);
+          setCouponCodeData(res.data.couponCode);
+          setCouponCode("");
+        }
+      }
+      if (res.data.couponCode === null) {
+        toast.error("Coupon code does not exist!");
+        setCouponCode("");
+      }
+    });
+  };
+
+  const handlePointsToggle = () => {
+    if (userPoints < 1000 && !useRewardPoints) {
+      toast.error("You need at least 1000 points to redeem!");
+      return;
+    }
+    setUseRewardPoints(!useRewardPoints);
+  };
+
