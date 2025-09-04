@@ -158,3 +158,23 @@ const Checkout = () => {
     }
 
     return price.toFixed(2);
+  })();
+
+  return (
+    <div className="w-full flex flex-col items-center py-8">
+      <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
+        <div className="w-full 800px:w-[65%]">
+          <ShippingInfo
+            user={user}
+            country={country}
+            setCountry={setCountry}
+            city={city}
+            setCity={setCity}
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
+            address1={address1}
+            setAddress1={setAddress1}
+            address2={address2}
+            setAddress2={setAddress2}
+            zipCode={zipCode}
+            setZipCode={setZipCode}
