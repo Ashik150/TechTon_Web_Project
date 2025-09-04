@@ -59,3 +59,27 @@ import ShopSettings from "./components/Shop/ShopSettings.jsx";
 import ShopWithDrawMoneyPage from "./pages/Shop/ShopWithDrawMoneyPage.jsx";
 import UserInbox from "./pages/UserInbox.jsx";
 
+
+
+// protect routes that require authentication
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!user.isVerified) {
+    return <Navigate to="/verify-email" replace />;
+  }
+
+  return children;
+};
+
+const SellerProtectedRoute = ({ isSeller, children }) => {
+  if (!isSeller) {
+    return <Navigate to={`/shop-login`} replace />;
+  }
+  return children;
+};
+
