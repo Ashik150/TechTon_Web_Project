@@ -37,4 +37,13 @@ const Events = () => {
           }
 
          </h4>
-  
+      </div>
+     
+    </div>
+      )
+     }
+  </div>
+  )
+}
+
+export default Events
