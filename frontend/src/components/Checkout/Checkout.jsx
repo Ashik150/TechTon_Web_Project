@@ -141,3 +141,20 @@ const Checkout = () => {
     setUseRewardPoints(!useRewardPoints);
   };
 
+  const discountPercentenge = couponCodeData ? discountPrice : "";
+
+  // Calculate total price with all discounts
+  const totalPrice = (() => {
+    let price = subTotalPrice + shipping;
+
+    // Subtract coupon discount if available
+    if (couponCodeData && discountPrice) {
+      price -= discountPrice;
+    }
+
+    // Subtract points discount if points are being used
+    if (useRewardPoints && pointsDiscount > 0) {
+      price -= pointsDiscount;
+    }
+
+    return price.toFixed(2);
