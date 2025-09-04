@@ -178,3 +178,32 @@ const Checkout = () => {
             setAddress2={setAddress2}
             zipCode={zipCode}
             setZipCode={setZipCode}
+          />
+        </div>
+        <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
+          <CartData
+            handleSubmit={handleSubmit}
+            totalPrice={totalPrice}
+            shipping={shipping}
+            subTotalPrice={subTotalPrice}
+            couponCode={couponCode}
+            setCouponCode={setCouponCode}
+            discountPercentenge={discountPercentenge}
+            userPoints={userPoints}
+            pointsDiscount={pointsDiscount}
+            useRewardPoints={useRewardPoints}
+            handlePointsToggle={handlePointsToggle}
+          />
+        </div>
+      </div>
+      <div
+        className={`${styles.button} w-[150px] 800px:w-[280px] mt-10`}
+        onClick={paymentSubmit}
+      >
+        <h5 className="text-white">Go to Payment</h5>
+      </div>
+    </div>
+  );
+};
+
+// Other components remain the same
