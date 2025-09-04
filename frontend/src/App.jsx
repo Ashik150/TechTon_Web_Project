@@ -341,4 +341,40 @@ function App() {
           <Route path="/verify-email" element={<EmailVerificationPage />} />
           <Route
             path="/forgot-password"
+            element={
+              <RedirectAuthenticatedUser>
+                <ForgotPasswordPage />
+              </RedirectAuthenticatedUser>
+            }
+          />
 
+          <Route
+            path="/reset-password/:token"
+            element={
+              <RedirectAuthenticatedUser>
+                <ResetPasswordPage />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          {/* catch all routes */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+        <Toaster />
+      </div>
+    </div>
+  );
+}
+
+export default App;
