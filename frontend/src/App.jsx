@@ -254,3 +254,45 @@ function App() {
               </SellerProtectedRoute>
             }
           />
+          <Route
+            path="/shopdashboard-messages"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopInboxPage />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/seller/activation/:activation_token"
+            element={<SellerActivationPage />}
+          />
+          <Route path="/order/success" element={<OrderSuccessPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inbox"
+            element={
+              <ProtectedRoute>
+                <UserInbox />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user/order/:id"
+            element={
+              <ProtectedRoute>
+                <OrderDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/user/track/order/:id"
+            element={
+              <ProtectedRoute>
+                <TrackOrderPage />
