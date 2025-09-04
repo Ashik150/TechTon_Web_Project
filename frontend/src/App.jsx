@@ -128,3 +128,52 @@ function App() {
               <Elements stripe={loadStripe(stripeApiKey)}>
                 <Routes>
                   <Route
+                    path="/payment"
+                    element={
+                      <ProtectedRoute>
+                        <PaymentPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </Elements>
+            )}
+          </BrowserRouter> */}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/best-selling" element={<BestSellingPage />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/product/:id" element={<ProductDetailsPage />} />
+          <Route
+            path="profilepage"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/shop-create" element={<ShopCreatePage />} />
+          <Route path="/shop-login" element={<ShopLoginPage />} />
+          <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
+          <Route
+            path="/shopdashboard"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopDashboardPage />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/shopdashboard-create-product"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopCreateProduct />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/shopdashboard-create-event"
+            element={
