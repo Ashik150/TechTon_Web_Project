@@ -75,3 +75,49 @@ const Checkout = () => {
         city,
       };
 
+      const orderData = {
+        cart,
+        totalPrice,
+        subTotalPrice,
+        shipping,
+        discountPrice,
+        pointsDiscount, // Add points discount to order data
+        pointsUsed: useRewardPoints ? userPoints : 0, // Track points used
+        shippingAddress,
+        user,
+      };
+
+      // update local storage with the updated orders array
+      localStorage.setItem("latestOrder", JSON.stringify(orderData));
+      navigate("/payment");
+    }
+  };
+
+  const subTotalPrice = cart.reduce(
+    (acc, item) => acc + item.qty * item.discountPrice,
+    0
+  );
+
+  // this is shipping cost variable
+  const shipping = subTotalPrice * 0.1;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const name = couponCode;
+
+    await axios.get(`${server}/coupon/get-coupon-value/${name}`).then((res) => {
+      const shopId = res.data.couponCode?.shopId;
+      const couponCodeValue = res.data.couponCode?.value;
+      if (res.data.couponCode !== null) {
+        const isCouponValid =
+          cart && cart.filter((item) => item.shopId === shopId);
+
+        if (isCouponValid.length === 0) {
+          toast.error("Coupon code is not valid for this shop");
+          setCouponCode("");
+        } else {
+          const eligiblePrice = isCouponValid.reduce(
+            (acc, item) => acc + item.qty * item.discountPrice,
+            0
+          );
+          const discountPrice = (eligiblePrice * couponCodeValue) / 100;
