@@ -177,3 +177,40 @@ function App() {
           <Route
             path="/shopdashboard-create-event"
             element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopCreateEvents />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/shopdashboard-orders"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopAllOrders />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/shopdashboard-products"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopAllProducts />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/shopdashboard-events"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopAllEvents />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/shopdashboard-coupons"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopAllCoupons />
+              </SellerProtectedRoute>
+            }
+          />
