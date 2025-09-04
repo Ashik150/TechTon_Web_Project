@@ -214,3 +214,43 @@ function App() {
               </SellerProtectedRoute>
             }
           />
+          <Route
+            path="/shop/:id"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopHomePage />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/order/:id"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopOrderDetails />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/shopdashboard-refunds"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopAllRefunds />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopSettingsPage />
+              </SellerProtectedRoute>
+            }
+          />
+          <Route
+            path="/shopdashboard-withdraw-money"
+            element={
+              <SellerProtectedRoute isSeller={isSeller}>
+                <ShopWithDrawMoneyPage />
+              </SellerProtectedRoute>
+            }
+          />
