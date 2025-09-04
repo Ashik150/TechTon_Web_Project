@@ -101,3 +101,30 @@ function App() {
   //const [stripeApiKey, setStripeApiKey] = useState("");
 
   async function getStripeApiKey() {
+    //const { data } = await axios.get(`${server}/api/payment/stripeapikey`);
+    const {data} = "pk_test_51QbznEGWFtnm4a58mz7ymVUi0qubUuhpNDJydjsPMcGVVHTY0ydJkS2RR6dRzBoU04WI78ocCIKIgum85zzcAGxs00LhW2Z51m";
+    //console.log("Stripe API Key: ", data.stripeApikey);
+    setStripeApiKey(data.stripeApikey);
+  }
+  const stripeApiKey = "pk_test_51QbznEGWFtnm4a58mz7ymVUi0qubUuhpNDJydjsPMcGVVHTY0ydJkS2RR6dRzBoU04WI78ocCIKIgum85zzcAGxs00LhW2Z51m";
+  useEffect(() => {
+    checkAuth();
+    Store.dispatch(loadSeller());
+    getStripeApiKey();
+  }, [checkAuth]);
+  console.log("Stripe: ", stripeApiKey);
+
+  if (isCheckingAuth) return <LoadingSpinner />;
+
+  return (
+    <div>
+      <div>
+        {/* <FloatingShape color='bg-green-500' size='w-64 h-64' top='-5%' left='10%' delay={0} />
+			<FloatingShape color='bg-emerald-500' size='w-48 h-48' top='70%' left='80%' delay={5} />
+			<FloatingShape color='bg-lime-500' size='w-32 h-32' top='40%' left='-10%' delay={2} /> */}
+
+        {/* <BrowserRouter>
+            {stripeApiKey && (
+              <Elements stripe={loadStripe(stripeApiKey)}>
+                <Routes>
+                  <Route
