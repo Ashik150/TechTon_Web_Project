@@ -296,3 +296,49 @@ function App() {
             element={
               <ProtectedRoute>
                 <TrackOrderPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                {stripeApiKey ? (
+                  <Elements stripe={loadStripe(stripeApiKey)}>
+                    <PaymentPage />
+                  </Elements>
+                ) : (
+                  <Loader /> // or any loading component you have
+                )}
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <RedirectAuthenticatedUser>
+                <SignUpPage />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RedirectAuthenticatedUser>
+                <LoginPage />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route path="/verify-email" element={<EmailVerificationPage />} />
+          <Route
+            path="/forgot-password"
+
