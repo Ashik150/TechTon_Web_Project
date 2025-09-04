@@ -31,3 +31,14 @@ const CountDown = ({ data={} }) => {
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((difference / 1000 / 60) % 60),
         seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    return timeLeft;
+  }
+
+  const timerComponents = Object.keys(timeLeft).map((interval) => {
+    if (!timeLeft[interval]) {
+      return null;
+    }
+
