@@ -12,6 +12,11 @@ router.post('/logout', logout);
 router.post('/verify-email', verifyEmail);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password/:token', resetPassword);
+router.put('/update-user-info', updateUserInfo);
+router.put('/update-avatar', updateAvatar);
+router.put('/update-user-addresses',verifyToken,updateUserAddress);
+router.delete('/delete-user-address/:id',verifyToken, deleteUserAddress);
+router.put('/update-user-password',verifyToken,updatePassword);
 router.get('/user-info/:id',userinfo);
 
 export default router;
